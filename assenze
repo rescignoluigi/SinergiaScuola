@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Segnala Assenza</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h2>Segnala assenza docente</h2>
+
+<form id="formAssenza">
+  <label>Data:</label>
+  <input type="date" id="data" required>
+
+  <label>ID docente:</label>
+  <input type="text" id="idDocente" required>
+
+  <label>Cognome:</label>
+  <input type="text" id="cognome" required>
+
+  <label>Nome:</label>
+  <input type="text" id="nome" required>
+
+  <label>Ora da:</label>
+  <input type="number" id="oraDa" min="1" max="10" required>
+
+  <label>Ora a:</label>
+  <input type="number" id="oraA" min="1" max="10" required>
+
+  <label>Tipo assenza:</label>
+  <select id="tipo">
+    <option value="Malattia">Malattia</option>
+    <option value="Permesso">Permesso</option>
+    <option value="Assenza breve">Assenza breve</option>
+  </select>
+
+  <label>Note:</label>
+  <textarea id="note"></textarea>
+
+  <button type="submit">Invia assenza</button>
+</form>
+
+<div id="risultato"></div>
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
