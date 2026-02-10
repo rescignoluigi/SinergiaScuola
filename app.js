@@ -71,3 +71,4 @@ if (document.getElementById("formSostituzione")) {
         : `<p style="color:red">Errore: ${r.error}</p>`;
   });
 }
+
