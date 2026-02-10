@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SinergiaScuola</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1a73e8">
+
+  <link rel="icon" href="192.jpg" sizes="192x192">
+  <link rel="apple-touch-icon" href="512.jpg">
+</head>
+
+<body>
+
+  <h1>SinergiaScuola</h1>
+  <p>App installabile</p>
+
+  <script>
+    // URL stabile che NON cambia mai
+    const API = "https://script.google.com/macros/s/AKfycby8xjqBRJTkghkEmRh07dLC0AXRLWSSChO_yHn6JEypwL2YFOAGFu1hqUImE4qMOVmT/dev";
+
+    fetch(API + "?azione=test")
+      .then(r => r.text())
+      .then(t => console.log("Risposta Apps Script:", t));
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+
+</body>
+</html>
