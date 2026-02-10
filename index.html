@@ -5,52 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SinergiaScuola</title>
 
-  <!-- Manifest e colori istituzionali -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1a73e8">
 
-  <!-- Icone PWA -->
   <link rel="icon" href="192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="512.png">
 
-  <!-- Stile minimale istituzionale -->
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #f5f7fa;
+      background: #eef2f7;
       color: #1a1a1a;
     }
 
     header {
-      background: #1a73e8;
+      background: linear-gradient(135deg, #1a73e8, #1558b0);
       color: white;
-      padding: 20px;
+      padding: 40px 20px;
       text-align: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    header p {
+      margin: 10px 0 0;
+      font-size: 18px;
+      opacity: 0.95;
     }
 
     main {
-      padding: 25px;
-      max-width: 600px;
+      padding: 35px 20px;
+      max-width: 800px;
       margin: auto;
+    }
+
+    .intro {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      border: 1px solid #d0d7e2;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       text-align: center;
+      margin-bottom: 35px;
     }
 
-    h1 {
+    .intro p {
       margin: 0;
-      font-size: 28px;
-      font-weight: 600;
-    }
-
-    p {
       font-size: 18px;
-      margin-top: 10px;
+      line-height: 1.5;
     }
 
     .btn-install {
       display: none;
-      margin-top: 25px;
+      margin: 25px auto;
       padding: 15px 20px;
       font-size: 18px;
       background: #1a73e8;
@@ -58,27 +73,43 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-    }
-
-    nav {
-      margin-top: 30px;
-    }
-
-    nav a {
-      display: block;
-      margin: 10px auto;
-      padding: 12px 18px;
       width: 80%;
+      max-width: 300px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .section-title {
+      font-size: 22px;
+      margin-top: 20px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+      text-align: center;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .card {
       background: white;
+      padding: 22px;
+      border-radius: 10px;
       border: 1px solid #d0d7e2;
-      border-radius: 6px;
       text-decoration: none;
       color: #1a1a1a;
       font-size: 18px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      transition: 0.2s;
+      text-align: center;
     }
 
-    nav a:hover {
+    .card:hover {
       background: #e8f0fe;
+      transform: translateY(-3px);
     }
   </style>
 </head>
@@ -87,43 +118,45 @@
 
   <header>
     <h1>SinergiaScuola</h1>
+    <p>Piattaforma istituzionale per la gestione organizzativa</p>
   </header>
 
   <main>
-    <p>Piattaforma istituzionale per la gestione delle assenze e delle sostituzioni.</p>
 
-    <!-- Pulsante installazione PWA -->
+    <div class="intro">
+      <p>Benvenuto nella piattaforma ufficiale per la gestione delle assenze e delle sostituzioni del personale docente.  
+      Un sistema moderno, affidabile e progettato per semplificare il lavoro quotidiano delle segreterie e dei plessi scolastici.</p>
+    </div>
+
     <button id="installBtn" class="btn-install">Installa l'app</button>
 
-    <!-- Navigazione -->
-    <nav>
-      <a href="assenze.html">Segnala assenza docente</a>
-      <a href="sostituzioni.html">Gestisci sostituzioni</a>
-    </nav>
+    <div class="section-title">Moduli disponibili</div>
+
+    <div class="cards">
+      <a class="card" href="assenze.html">Segnala assenza docente</a>
+      <a class="card" href="sostituzioni.html">Gestisci sostituzioni</a>
+    </div>
+
   </main>
 
   <script>
-    // URL stabile del backend
     const API = "https://script.google.com/macros/s/AKfycby8xjqBRJTkghkEmRh07dLC0AXRLWSSChO_yHn6JEypwL2YFOAGFu1hqUImE4qMOVmT/dev";
 
-    // Test rapido backend
     fetch(API + "?azione=test")
       .then(r => r.text())
       .then(t => console.log("Risposta Apps Script:", t));
 
-    // Service Worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js");
     }
 
-    // Installazione PWA
     let deferredPrompt;
     const installBtn = document.getElementById("installBtn");
 
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      installBtn.style.display = "inline-block";
+      installBtn.style.display = "block";
     });
 
     installBtn.addEventListener("click", async () => {
