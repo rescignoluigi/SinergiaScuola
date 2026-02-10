@@ -5,29 +5,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SinergiaScuola</title>
 
+  <!-- Manifest e colori istituzionali -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1a73e8">
 
-  <link rel="icon" href="192.jpg" sizes="192x192">
-  <link rel="apple-touch-icon" href="512.jpg">
+  <!-- Icone PWA -->
+  <link rel="icon" href="192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="512.png">
+
+  <!-- Stile minimale istituzionale -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f7fa;
+      color: #1a1a1a;
+    }
+
+    header {
+      background: #1a73e8;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    main {
+      padding: 25px;
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .btn-install {
+      display: none;
+      margin-top: 25px;
+      padding: 15px 20px;
+      font-size: 18px;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    nav {
+      margin-top: 30px;
+    }
+
+    nav a {
+      display: block;
+      margin: 10px auto;
+      padding: 12px 18px;
+      width: 80%;
+      background: white;
+      border: 1px solid #d0d7e2;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #1a1a1a;
+      font-size: 18px;
+    }
+
+    nav a:hover {
+      background: #e8f0fe;
+    }
+  </style>
 </head>
 
 <body>
 
-  <h1>SinergiaScuola</h1>
-  <p>App installabile</p>
+  <header>
+    <h1>SinergiaScuola</h1>
+  </header>
+
+  <main>
+    <p>Piattaforma istituzionale per la gestione delle assenze e delle sostituzioni.</p>
+
+    <!-- Pulsante installazione PWA -->
+    <button id="installBtn" class="btn-install">Installa l'app</button>
+
+    <!-- Navigazione -->
+    <nav>
+      <a href="assenze.html">Segnala assenza docente</a>
+      <a href="sostituzioni.html">Gestisci sostituzioni</a>
+    </nav>
+  </main>
 
   <script>
-    // URL stabile che NON cambia mai
+    // URL stabile del backend
     const API = "https://script.google.com/macros/s/AKfycby8xjqBRJTkghkEmRh07dLC0AXRLWSSChO_yHn6JEypwL2YFOAGFu1hqUImE4qMOVmT/dev";
 
+    // Test rapido backend
     fetch(API + "?azione=test")
       .then(r => r.text())
       .then(t => console.log("Risposta Apps Script:", t));
 
+    // Service Worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js");
     }
+
+    // Installazione PWA
+    let deferredPrompt;
+    const installBtn = document.getElementById("installBtn");
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = "inline-block";
+    });
+
+    installBtn.addEventListener("click", async () => {
+      installBtn.style.display = "none";
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    });
   </script>
 
 </body>
