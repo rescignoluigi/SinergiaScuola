@@ -203,7 +203,7 @@ def crea_lezione(lezione: Lezione):
 
 
 # ============================
-# ASSENZE E SOSTITUZIONI
+# ASSENZE
 # ============================
 
 @app.get("/assenze", response_model=List[Assenza])
@@ -216,5 +216,6 @@ def registra_assenza(assenza: Assenza):
         raise HTTPException(status_code=400, detail="Docente inesistente")
     assenze_db.append(assenza)
     return assenza
+
 
 
