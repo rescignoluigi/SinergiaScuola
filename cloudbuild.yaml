@@ -6,7 +6,7 @@ options:
 
 steps:
   - name: "gcr.io/cloud-builders/docker"
-    dir: "backend"
+    dir: "."
     args:
       - "build"
       - "-t"
