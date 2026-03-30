@@ -1,17 +1,19 @@
-# Usa Python ufficiale
-FROM python:3.11-slim
+serviceAccount: "projects/sinergiascuola-backend-v2/serviceAccounts/sinergia-backend@sinergiascuola-backend-v2.iam.gserviceaccount.com"
 
-# Imposta la working directory
-WORKDIR /app
+options:
+  logging: CLOUD_LOGGING_ONLY
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 
-# Copia SOLO il backend
-COPY backend/ /app/
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    dir: "."
+    args:
+      - "build"
+      - "-t"
+      - "europe-west8-docker.pkg.dev/sinergiascuola-backend-v2/backend/backend-image:$COMMIT_SHA"
+      - "-f"
+      - "Dockerfile"
+      - "."
 
-# Installa le dipendenze
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Porta esposta
-ENV PORT=8080
-
-# Comando di avvio
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+images:
+  - "europe-west8-docker.pkg.dev/sinergiascuola-backend-v2/backend/backend-image:$COMMIT_SHA"
