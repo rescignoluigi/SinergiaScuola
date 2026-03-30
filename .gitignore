@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+backend/venv/
+
+# Local DB
+*.db
+
+# Credentials (mai nel repo)
+backend/app/credentials/
+
+# Node modules
+frontend/node_modules/
+
+# Build artifacts
+dist/
+build/
